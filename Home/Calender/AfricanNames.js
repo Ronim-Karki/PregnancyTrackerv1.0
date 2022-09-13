@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, ScrollView, Pressable } from 'react-native';
 import React, { useState, useEffect } from 'react';
 
-const BabyName = ({ navigation }) => {
+const BabyName = () => {
   const [data, setData] = useState([]);
 
   const dataFetch = async () => {
@@ -34,7 +34,7 @@ const BabyName = ({ navigation }) => {
   return (
     <View style={{ backgroundColor: 'white', flex: 1 }}>
       <View style={{ paddingTop: 15, margin: 15 }}>
-        <Text style={{ fontSize: 25, fontWeight: 'bold' }}>BabyName</Text>
+        <Text style={{ fontSize: 25, fontWeight: 'bold' }}>Names</Text>
         <View>
           {data.map((item, index) => {
             return item.map((item, index) => {
@@ -49,9 +49,14 @@ const BabyName = ({ navigation }) => {
                       marginTop: 15,
                       marginBottom: 15,
                     }}
-                    onPress={() => navigation.navigate('AfricanNames')}
                   >
-                    {country}
+                    {names.boy.map((item, index) => {
+                      return (
+                        <ScrollView>
+                          <Text> {item}</Text>
+                        </ScrollView>
+                      );
+                    })}
                   </Text>
                 </Pressable>
               );

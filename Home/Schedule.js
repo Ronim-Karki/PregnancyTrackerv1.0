@@ -2,23 +2,26 @@ import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import Bar from './Bar';
 import { Fontisto, Feather, FontAwesome5 } from '@expo/vector-icons';
+import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
 
-const Weeks = () => {
+const Weeks = ({ navigation }) => {
   return (
     <View style={{ ...styles.container, ...styles.elevation }}>
       <Text style={{ fontWeight: 'bold', fontSize: 30, color: 'black' }}>
         Actions
       </Text>
-      <View style={{ display: 'flex', flex: 1 }}>
+      <View style={{ display: 'flex', flex: 1, marginBottom: 5 }}>
         <View style={styles.actionbox}>
           <View style={styles.icons}>
             <Fontisto name="date" size={24} color="#92AADA" />
           </View>
 
           <View style={styles.borderStyle}>
-            <Text style={{ fontSize: 18, fontWeight: 'bold' }}>
-              Appointment
-            </Text>
+            <Pressable onPress={() => navigation.navigate('Appointment')}>
+              <Text style={{ fontSize: 18, fontWeight: 'bold' }}>
+                Appointment
+              </Text>
+            </Pressable>
 
             <Text
               style={{
@@ -35,9 +38,12 @@ const Weeks = () => {
           </View>
 
           <View style={styles.borderStyle}>
-            <Text style={{ fontSize: 18, fontWeight: 'bold' }}>
-              Your to-do list
-            </Text>
+            <Pressable onPress={() => navigation.navigate('ToDo')}>
+              <Text style={{ fontSize: 18, fontWeight: 'bold' }}>
+                Your to-do list
+              </Text>
+            </Pressable>
+
             <Text style={{ color: '#7E8383' }}>To-Do List</Text>
           </View>
         </View>
@@ -47,9 +53,12 @@ const Weeks = () => {
           </View>
 
           <View style={{ marginLeft: 30 }}>
-            <Text style={{ fontSize: 18, fontWeight: 'bold' }}>
-              Current Weight
-            </Text>
+            <Pressable onPress={() => navigation.navigate('Weight')}>
+              <Text style={{ fontSize: 18, fontWeight: 'bold' }}>
+                Current Weight
+              </Text>
+            </Pressable>
+
             <Text style={{ color: '#7E8383' }}>Current Weight</Text>
           </View>
         </View>
@@ -82,6 +91,7 @@ const styles = StyleSheet.create({
     borderColor: '#7E8383',
     borderBottomWidth: 0.5,
     marginLeft: 30,
+    marginBottom: 15,
   },
   actionbox: {
     flexDirection: 'row',
@@ -90,6 +100,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     alignSelf: 'center',
+    marginBottom: 15,
   },
 });
 export default Weeks;

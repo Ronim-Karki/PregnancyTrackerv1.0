@@ -10,7 +10,7 @@ import {
 import React, { useState } from 'react';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { useGlobalContext } from '../context/context';
-import { auth } from '../firebase/config';
+import { auth, db } from '../firebase/config';
 import { doc, setDoc, addDoc, collection } from 'firebase/firestore';
 const DueDateCal = ({ navigation }) => {
   const {
@@ -43,7 +43,7 @@ const DueDateCal = ({ navigation }) => {
           age,
           youAre,
           firstChild,
-          dueDate
+          new Date(dueDate).toLocaleDateString()
         );
 
         setSigned(true);

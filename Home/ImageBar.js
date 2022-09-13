@@ -1,7 +1,9 @@
 import { StyleSheet, Text, View, Pressable, Image } from 'react-native';
 import React from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useGlobalContext } from '../context/context';
 const ImageBar = ({ navigation }) => {
+  const { week, personname } = useGlobalContext();
   return (
     <View style={{ maxWidth: '100%' }}>
       <Pressable
@@ -68,7 +70,7 @@ const ImageBar = ({ navigation }) => {
               Good Morning,
             </Text>
             <Text style={{ fontSize: 30, fontWeight: 'bold', color: 'white' }}>
-              Hello
+              {personname}
             </Text>
             <View style={{ flex: 1, justifyContent: 'flex-end' }}>
               <Text
@@ -82,7 +84,7 @@ const ImageBar = ({ navigation }) => {
                   // justifyContent: 'flex-end',
                 }}
               >
-                Week 7
+                Week {week}
               </Text>
             </View>
           </View>

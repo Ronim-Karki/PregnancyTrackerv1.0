@@ -1,36 +1,71 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
-import { useGlobalContext } from '../context/context';
+import { useGlobalContext } from '../../context/context';
+import { auth } from '../../firebase/config';
 
 const DropDownProfile = (props) => {
   const [value, setValue] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
 
-  const { age, setAge, yourAre, setYouAre, firstChild, setFirstChild, text } =
-    useGlobalContext();
-  const renderLabel = () => {
-    if (value || isFocus) {
-      return (
-        <Text style={[styles.label, isFocus && { color: '#878383' }]}>
-          {props.name}
-        </Text>
-      );
-    }
-    return null;
-  };
+  const {
+    age,
+    setAge,
+    youAre,
+    setYouAre,
+    firstChild,
+    setFirstChild,
+    text,
+    dueDate,
+    name,
+    sex,
+    setSex,
+    updateUser,
+    data,
+  } = useGlobalContext();
+
+  //   const renderLabel = () => {
+  //     if (value || isFocus) {
+  //       return (
+  //         <Text style={[styles.label, isFocus && { color: '#b2b2b2' }]}>
+  //           {props.name}
+  //         </Text>
+  //       );
+  //     }
+  //     return null;
+  //   };
   const result = () => {
-    if (props.placeholderName === text[0]) {
-      return age;
-    } else if (props.placeholderName === text[1]) {
-      return yourAre;
-    } else if (props.placeholderName === text[2]) {
-      return firstChild;
+    if (props.placeholderName === 'Unknown') {
+      return props.sex;
+    } else if (props.placeholderName === 'Yes') {
+      return props.first;
+    } else if (props.placeholderName === 'Age') {
+      return props.ageof;
+    } else if (props.placeholderName === 'YouAre') {
+      return props.youArethe;
     }
   };
+  {
+    data.map((item, index) => {
+      if ((auth.currentUser.email === item.email) === true) {
+        useEffect(() => {
+          updateUser(
+            undefined,
+            age || props.age,
+            youAre || props.youAre,
+            firstChild || props.firstChild,
+            dueDate,
+            sex,
+            undefined
+          );
+        }, [age, youAre, firstChild, dueDate, sex]);
+      }
+    });
+  }
+
   return (
     <View style={styles.container}>
-      {renderLabel()}
+      {/* {renderLabel()} */}
       <Dropdown
         style={[styles.dropdown, isFocus && { borderColor: '#878383' }]}
         placeholderStyle={styles.placeholderStyle}
@@ -48,14 +83,17 @@ const DropDownProfile = (props) => {
         onFocus={() => setIsFocus(true)}
         onBlur={() => setIsFocus(false)}
         onChange={(item) => {
-          if (props.placeholderName === text[0]) {
+          if (props.placeholderName === 'Unkown') {
+            setSex(item.value);
+            setIsFocus(false);
+          } else if (props.placeholderName === 'Yes') {
+            setFirstChild(item.value);
+            setIsFocus(false);
+          } else if (props.placeholderName === 'Age') {
             setAge(item.value);
             setIsFocus(false);
-          } else if (props.placeholderName === text[1]) {
+          } else if (props.placeholderName === 'YouAre') {
             setYouAre(item.value);
-            setIsFocus(false);
-          } else if (props.placeholderName === text[2]) {
-            setFirstChild(item.value);
             setIsFocus(false);
           }
         }}
@@ -68,16 +106,20 @@ export default DropDownProfile;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'white',
+    // backgroundColor: 'white',
     // padding: 16,
+    marginBottom: 11,
   },
   dropdown: {
-    height: 50,
-
+    height: 30,
+    width: 100,
     borderColor: '#CCC5C5',
-    borderWidth: 1,
+
+    // borderWidth: 1,
     borderRadius: 8,
-    paddingHorizontal: 8,
+    // paddingHorizontal: 8,
+
+    // backgroundColor: 'white',
   },
   icon: {
     marginRight: 5,
@@ -87,9 +129,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     left: 22,
     top: -7,
-    zIndex: 999,
-    paddingHorizontal: 8,
-
+    zIndex: 9999,
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    // height: 500,
+    flex: 1,
     fontSize: 14,
   },
   placeholderStyle: {
@@ -98,7 +142,8 @@ const styles = StyleSheet.create({
     // fontWeight: 'bold',
   },
   selectedTextStyle: {
-    fontSize: 16,
+    fontSize: 20,
+    fontWeight: 'bold',
   },
   iconStyle: {
     width: 20,

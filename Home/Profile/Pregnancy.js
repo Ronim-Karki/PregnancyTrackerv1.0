@@ -5,6 +5,7 @@ import {
   FlatList,
   SafeAreaView,
   SectionList,
+  TextInput,
   Button,
 } from 'react-native';
 import React, { useEffect, useState } from 'react';
@@ -12,6 +13,10 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Account from './Account';
 import { auth } from '../../firebase/config';
 
+import DropDownProfile from './DropDownProfile';
+import { babySex } from '../../data/babySex';
+import { firstChild } from '../../data/firstChild';
+import { useGlobalContext } from '../../context/context';
 // import sex from "./data.js"
 const Data = [
   {
@@ -57,10 +62,13 @@ const Data = [
   },
 ];
 
-const Pregnancy = () => {
+const Pregnancy = ({ navigation }) => {
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState('');
-  const [data, setData] = useState([{}]);
+
+  const [babyNameh, setBabyName] = useState('');
+  // const [profile, setProfile] = useState({});
+  const { updateUser, data, setKey, key, setGetDate } = useGlobalContext();
   const sex = [
     { label: 'Boy', value: 'Boy' },
     {
@@ -76,34 +84,51 @@ const Pregnancy = () => {
       <Item title={item.title} image={item.image} options={item.options} />
     );
   };
-  const dataFetch = async () => {
-    try {
-      const response = await fetch(
-        'https://pregnancytracker-6648d-default-rtdb.firebaseio.com/users.json'
-      );
-      const resData = await response.json();
+  // const dataFetch = async () => {
+  //   try {
+  //     const response = await fetch(
+  //       'https://pregnancytracker-6648d-default-rtdb.firebaseio.com/users.json'
+  //     );
+  //     const resData = await response.json();
 
-      const result = Object.values(resData);
-      console.log(result);
-      if (result) {
-        setData(result);
-      } else {
-        new Error('The result is empty cant trigger rerender');
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
-  useEffect(() => {
-    dataFetch();
-  }, []);
+  //     const result = Object.values(resData);
+  //     setKey(Object.keys(resData));
+  //     console.log(key);
+  //     // console.log(result);
+  //     if (result) {
+  //       setData(result);
+  //     } else {
+  //       new Error('The result is empty cant trigger rerender');
+  //     }
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+  // useEffect(() => {
+  //   dataFetch();
+  // }, [data]);
+  // const onChangeName = (e) => {
+  //   setBabyName(e.target.value);
+  // };
+  // useEffect(() => {
+  //   updateUser(
+  //     undefined,
+  //     undefined,
+  //     undefined,
+  //     undefined,
+  //     undefined,
+  //     undefined,
+  //     babyNameh
+  //   );
+  // }, []);
+  // console.log(babySex);
+
   const Item = ({ title, image, options }) => (
     <View style={styles.container}>
       <View style={{ marginRight: 15 }}>
         <MaterialCommunityIcons name={image} size={24} color="black" />
       </View>
       <Text style={styles.title}>{title}</Text>
-      <View style={{ flex: 1 }}></View>
     </View>
   );
   return (
@@ -116,39 +141,74 @@ const Pregnancy = () => {
           borderBottomColor: 'grey',
           borderBottomWidth: 1,
           marginBottom: 15,
+          flexDirection: 'row',
         }}
       >
-        {Data.map((item, index) => {
-          return (
-            <View key={index}>
-              <Item
-                title={item.title}
-                image={item.image}
-                options={item.options}
-              />
-            </View>
-          );
-        })}
+        <View style={{ flex: 1 }}>
+          {Data.map((item, index) => {
+            return (
+              <View key={index}>
+                <Item
+                  title={item.title}
+                  image={item.image}
+                  options={item.options}
+                />
+              </View>
+            );
+          })}
+        </View>
 
-        <View>
-          {/* {data.filter((item, index) => {
-            if (item.email === auth.currentUser.email) {
+        <View style={{ alignItems: 'flex-end' }}>
+          {data.map((item, index) => {
+            const { email } = item;
+            // console.log(name);
+            // console.log(auth.currentUser.email);
+            // console.log(email);
+            if ((auth.currentUser.email === email) === true) {
+              // return console.log(true);
+              // setGetDate(item.dueDate);
               return (
                 <View key={index}>
-                  <Text style={styles.title}>Boy</Text>
-                  <Text>{item.name}</Text>
-                  <Text>{item.dueDate}</Text>
+                  <DropDownProfile
+                    data={babySex}
+                    placeholderName={'Unkown'}
+                    sex={item.babySex}
+                  />
+                  <TextInput
+                    style={styles.title}
+                    placeholder={'Name'}
+                    value={babyNameh}
+                    onChange={(value) =>
+                      setBabyName(value) &&
+                      updateUser(
+                        undefined,
+                        undefined,
+                        undefined,
+                        undefined,
+                        undefined,
+                        undefined,
+                        babyNameh
+                      )
+                    }
+                  />
+                  <TextInput style={styles.title} placeholder={item.dueDate} />
+                  <Text style={styles.title}> </Text>
+
+                  <DropDownProfile
+                    data={firstChild}
+                    placeholderName={'Yes'}
+                    first={item.firstChild}
+                  />
                 </View>
               );
+            } else {
+              return false;
             }
-          })} */}
+          })}
         </View>
       </SafeAreaView>
 
       <Account Item={Item} />
-      <View>
-        <Button color={'#92AADA'} title="Sign Out" />
-      </View>
     </View>
   );
 };

@@ -15,6 +15,8 @@ import * as ImagePicker from 'expo-image-picker';
 import { Ionicons } from '@expo/vector-icons';
 import Pregnancy from './Profile/Pregnancy';
 import { auth } from '../firebase/config';
+
+import { signOut } from 'firebase/auth';
 const Profile = ({ navigation }) => {
   // The path of the picked image
   const [pickedImagePath, setPickedImagePath] = useState('');
@@ -62,28 +64,31 @@ const Profile = ({ navigation }) => {
       console.log(result.uri);
     }
   };
-  const dataFetch = async () => {
-    try {
-      const response = await fetch(
-        'https://pregnancytracker-6648d-default-rtdb.firebaseio.com/users.json'
-      );
-      const resData = await response.json();
-      console.log(resData);
-      const result = Object.values(resData);
+  // const dataFetch = async () => {
+  //   try {
+  //     const response = await fetch(
+  //       'https://pregnancytracker-6648d-default-rtdb.firebaseio.com/users.json'
+  //     );
+  //     const resData = await response.json();
+  //     console.log(resData);
+  //     const result = Object.values(resData);
 
-      if (result) {
-        setData(result);
-      } else {
-        new Error('The result is empty cant trigger rerender');
-      }
-    } catch (err) {
-      console.log(err);
-    }
+  //     if (result) {
+  //       setData(result);
+  //     } else {
+  //       new Error('The result is empty cant trigger rerender');
+  //     }
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+  // useEffect(() => {
+  //   dataFetch()
+  // }, []);
+  const onSignOut = () => {
+    navigation.navigate('Login');
+    signOut(auth);
   };
-  useEffect(() => {
-    dataFetch();
-  }, []);
-
   console.log('This is world');
   return (
     <ScrollView>
@@ -110,28 +115,6 @@ const Profile = ({ navigation }) => {
                 }}
               >
                 Profile
-              </Text>
-              <Text style={{ textAlign: 'center', color: 'white' }}>
-                {/* {auth.currentUser.email === data.email
-                  ? data.name
-                  : auth.currentUser.email} */}
-                {
-                  /* {data.map((item, index) => {
-                  const { name, age, dueDate, email } = item;
-                  if (auth.currentUser.email === email) {
-                    name;
-                  } else {
-                    auth.currentUser;
-                  }
-                })} */
-
-                  data
-
-                    .filter((item) => item.email === auth.currentUser.email)
-                    .map((item, index) => {
-                      return item.name;
-                    })
-                }
               </Text>
             </View>
 
@@ -182,6 +165,14 @@ const Profile = ({ navigation }) => {
           </View>
         </View>
         <Pregnancy />
+        <View style={{ alignItems: 'center', marginBottom: 15 }}>
+          <Button
+            style={{ width: 50 }}
+            color={'#92AADA'}
+            title="Sign Out"
+            onPress={onSignOut}
+          />
+        </View>
       </View>
     </ScrollView>
   );

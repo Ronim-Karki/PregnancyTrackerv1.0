@@ -6,30 +6,38 @@ import { useGlobalContext } from '../../context/context';
 const Appoinment = () => {
   const { isOpen, setIsOpen } = useGlobalContext();
   const [selectedStartDate, setSelectedStartDate] = useState(null);
-  if (isOpen == true) {
-    const onDateChange = (date) => {
-      setSelectedStartDate(date);
-    };
 
-    const startDate = selectedStartDate ? selectedStartDate.toString() : '';
-    return (
-      <View style={styles.container}>
-        <CalendarPicker onDateChange={onDateChange} />
+  const onDateChange = (date) => {
+    setSelectedStartDate(date);
+  };
 
-        <View>
-          <Text>SELECTED DATE:{startDate}</Text>
-        </View>
+  const startDate = selectedStartDate ? selectedStartDate.toString() : '';
+  return (
+    <View style={styles.container}>
+      <CalendarPicker onDateChange={onDateChange} />
+
+      <View>
+        <Text
+          style={{
+            marginTop: 15,
+            fontSize: 18,
+            textAlign: 'center',
+            fontWeight: 'bold',
+          }}
+        >
+          Appoinment: {new Date(startDate).toDateString()}
+        </Text>
       </View>
-    );
-  } else {
-    <Text>NoThing to display</Text>;
-  }
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingTop: 25,
     backgroundColor: '#FFFFFF',
+    padding: 15,
   },
 });
 export default Appoinment;

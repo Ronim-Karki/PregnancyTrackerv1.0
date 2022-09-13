@@ -18,6 +18,11 @@ import ThreeImages from './Home/Calender/ThreeImages';
 import Appointment from './Home/Calender/Appointment';
 import Images from './Home/Calender/Images';
 import DueDate from './Home/DueDate';
+import Weight from './Home/Calender/Weight';
+import AfricanNames from './Home/Calender/AfricanNames';
+import YourBaby from './View/Screen/YourBaby';
+import YourBody from './View/Screen/YourBody';
+import HealthTips from './View/Screen/HealthTips';
 const Stack = createNativeStackNavigator();
 export default function App() {
   return (
@@ -37,10 +42,15 @@ export default function App() {
             <Stack.Screen name="Tab" component={Layout} />
             <Stack.Screen name="BabyName" component={BabyName} />
             <Stack.Screen name="ToDo" component={ToDo} />
+            <Stack.Screen name="Weight" component={Weight} />
             <Stack.Screen name="ThreeImages" component={ThreeImages} />
+            <Stack.Screen name="AfricanNames" component={AfricanNames} />
             <Stack.Screen name="Appointment" component={Appointment} />
             <Stack.Screen name="Images" component={Images} />
             <Stack.Screen name="DueDate" component={DueDate} />
+            <Stack.Screen name="YourBaby" component={YourBaby} />
+            <Stack.Screen name="YourBody" component={YourBody} />
+            <Stack.Screen name="HealthTips" component={HealthTips} />
           </Stack.Navigator>
         </NavigationContainer>
       </View>

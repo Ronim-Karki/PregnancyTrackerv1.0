@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 
 import {
@@ -12,7 +12,38 @@ import {
 import Weeks from '../../Home/Weeks';
 import Schedule from '../../Home/Schedule';
 import ImageBar from '../../Home/ImageBar';
+import { useGlobalContext } from '../../context/context';
 function HomeScreen({ navigation }) {
+  // const { setGetDate, setData, setPersonName, data } = useGlobalContext();
+  // const dataFetch = async () => {
+  //   try {
+  //     const response = await fetch(
+  //       'https://pregnancytracker-6648d-default-rtdb.firebaseio.com/users.json'
+  //     );
+  //     const resData = await response.json();
+
+  //     const result = Object.values(resData);
+  //     // setKey(Object.keys(resData));
+  //     // console.log(key);
+  //     // console.log(result);
+  //     if (result) {
+  //       setData(result);
+  //       data.map((item, index) => {
+  //         if ((auth.currentUser.email === item.email) === true) {
+  //           setGetDate(item.dueDate);
+  //           setPersonName(item.name);
+  //         }
+  //       });
+  //     } else {
+  //       new Error('The result is empty cant trigger rerender');
+  //     }
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+  // useEffect(() => {
+  //   dataFetch;
+  // }, []);
   return (
     <ScrollView>
       <SafeAreaView style={styles.container}>
@@ -20,8 +51,8 @@ function HomeScreen({ navigation }) {
           <Text style={styles.textMain}>Today</Text>
         </View>
         <ImageBar navigation={navigation} />
-        <Weeks />
-        <Schedule />
+        <Weeks navigation={navigation} />
+        <Schedule navigation={navigation} />
       </SafeAreaView>
     </ScrollView>
   );

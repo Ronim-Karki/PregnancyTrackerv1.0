@@ -6,6 +6,7 @@ import {
   Button,
   TouchableOpacity,
   Pressable,
+  LogBox,
 } from 'react-native';
 import { MaterialIcons, AntDesign, FontAwesome } from '@expo/vector-icons';
 import Baby from '../Images/Baby.png';
@@ -40,6 +41,7 @@ const SignUp = ({ navigation }) => {
         // ...
       });
   };
+  LogBox.ignoreAllLogs();
   return (
     <View style={styles.background}>
       <View style={{ justifyContent: 'center', zIndex: -6 }}>

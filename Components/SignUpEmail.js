@@ -127,7 +127,7 @@ const SignUpEmail = ({ navigation }) => {
               }}
               value={email}
               placeholder="Email address"
-              onChangeText={(value) => setEmail(value)}
+              onChangeText={(value) => setEmail(value.toLowerCase())}
             />
           </View>
           {showError == true ? (

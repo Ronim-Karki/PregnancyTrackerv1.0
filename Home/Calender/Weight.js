@@ -2,22 +2,27 @@ import {
   StyleSheet,
   Text,
   View,
-  TextInput,
   ScrollView,
+  TextInput,
   Pressable,
 } from 'react-native';
 import React, { useState } from 'react';
 
-const ToDo = () => {
-  const [todo, setToDo] = useState(null);
+const Weight = () => {
+  const [todo, setToDo] = useState('');
   const [textvalue, settextValue] = useState('');
-  const onSave = () => {
+  const onSaveValue = () => {
     setToDo(textvalue);
   };
+  //   const onChange = (e) => {
+  //     settextValue(e.target.value);
+  //     console.log(textvalue);
+  //   };
+
   return (
     <ScrollView>
       <View style={styles.container}>
-        <Text style={styles.text}>ToDo</Text>
+        <Text style={styles.text}>Weight</Text>
         <View style={styles.box}>
           <TextInput
             style={{
@@ -31,10 +36,8 @@ const ToDo = () => {
               padding: -10,
             }}
             value={textvalue}
-            placeholder="Enter your list"
-            onChange={(textvalue) => {
-              settextValue(textvalue);
-            }}
+            placeholder="Enter your weight in KG"
+            onChange={(text) => settextValue(text)}
           />
         </View>
         <View
@@ -52,7 +55,7 @@ const ToDo = () => {
               textAlign: 'center',
               alignItems: 'center',
             }}
-            onPress={() => onSave()}
+            onPress={onSaveValue}
           >
             <Text
               style={{
@@ -68,15 +71,15 @@ const ToDo = () => {
             </Text>
           </Pressable>
         </View>
-        <View style={{ backgroundColor: 'white', marginTop: 15, height: 500 }}>
-          <Text>{textvalue}</Text>
+        <View style={{ marginTop: 25 }}>
+          <Text style={{ ...styles.text, textAlign: 'center' }}>{todo} Kg</Text>
         </View>
       </View>
     </ScrollView>
   );
 };
 
-export default ToDo;
+export default Weight;
 
 const styles = StyleSheet.create({
   container: {

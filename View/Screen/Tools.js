@@ -44,7 +44,7 @@ const Tools = ({ navigation }) => {
       des: 'Add new dates and times',
       color: '#5899E2',
       src: require('../../Images/Appoinment.png'),
-      calender: navigation.navigate('Date'),
+      calender: null,
     },
     {
       id: 5,
