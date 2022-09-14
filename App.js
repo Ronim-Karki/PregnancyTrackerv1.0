@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     // alignItems: 'center',
     justifyContent: 'center',
-    // paddingTop: 35,
+    paddingTop: 35,
     maxWidth: '100%',
     maxHeight: '100%',
   },

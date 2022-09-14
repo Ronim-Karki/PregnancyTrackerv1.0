@@ -20,7 +20,7 @@ const Explore = ({ navigation }) => {
   const dataFetch = async () => {
     try {
       const response = await fetch(
-        `https://pregnancytracker-6648d-default-rtdb.firebaseio.com/pregnancy/${urlLink}.json`
+        `https://pregnancytracker-6648d-default-rtdb.firebaseio.com/pregnancy/${week}.json`
       );
       const resData = await response.json();
 
@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
     margin: 10,
     maxWidth: '100%',
 
-    paddingTop: 15,
+    // paddingTop: 15,
     fontWeight: 'bold',
   },
   textMain: {

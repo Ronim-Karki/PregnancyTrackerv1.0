@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 
 const BabyName = () => {
   const [data, setData] = useState([]);
-
+  const [girl, setGirl] = useState(false);
   const dataFetch = async () => {
     try {
       const response = await fetch(
@@ -32,42 +32,100 @@ const BabyName = () => {
     dataFetch();
   }, []);
   return (
-    <View style={{ backgroundColor: 'white', flex: 1 }}>
-      <View style={{ paddingTop: 15, margin: 15 }}>
-        <Text style={{ fontSize: 25, fontWeight: 'bold' }}>Names</Text>
-        <View>
-          {data.map((item, index) => {
-            return item.map((item, index) => {
-              console.log(item);
-              const { country, names } = item;
-              return (
-                <Pressable key={index}>
-                  <Text
-                    style={{
-                      color: 'black',
-                      fontSize: 18,
-                      marginTop: 15,
-                      marginBottom: 15,
-                    }}
-                  >
-                    {names.boy.map((item, index) => {
-                      return (
-                        <ScrollView>
-                          <Text> {item}</Text>
-                        </ScrollView>
-                      );
-                    })}
-                  </Text>
-                </Pressable>
-              );
-            });
-          })}
+    <ScrollView>
+      <View
+        style={{
+          backgroundColor: 'white',
+
+          // flexDirection: 'row',
+          flex: 1,
+          // marginHorizontal: 20,
+        }}
+      >
+        <View style={{ margin: 10 }}>
+          <Text style={{ fontSize: 25, fontWeight: 'bold' }}>Names</Text>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'center',
+              // alignItems: 'center',
+            }}
+          >
+            <Pressable style={{ flex: 1 }} onPress={() => setGirl(false)}>
+              <Text
+                style={{
+                  fontSize: 25,
+                  fontWeight: 'bold',
+                  // flex: 1,
+                  // textAlign: 'center',
+                }}
+              >
+                Boy
+              </Text>
+            </Pressable>
+            <Pressable onPress={() => setGirl(true)}>
+              <Text style={{ fontSize: 25, fontWeight: 'bold' }}>Girl</Text>
+            </Pressable>
+          </View>
+          <View>
+            {data.map((item, index) => {
+              return item.map((item, index) => {
+                console.log(item);
+                const { country, names } = item;
+                if (country === 'African Names') {
+                  return (
+                    <View>
+                      <Pressable key={index}>
+                        {girl == false
+                          ? names.boy.map((item, index) => {
+                              return (
+                                <View style={styles.taskContainer}>
+                                  <Text key={index} style={styles.task}>
+                                    {item}
+                                  </Text>
+                                </View>
+                              );
+                            })
+                          : names.Girl.map((item, index) => {
+                              return (
+                                <View style={styles.taskContainer}>
+                                  <Text key={index} style={styles.task}>
+                                    {item}
+                                  </Text>
+                                </View>
+                              );
+                            })}
+                      </Pressable>
+                    </View>
+                  );
+                }
+              });
+            })}
+          </View>
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
 export default BabyName;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  taskContainer: {
+    // backgroundColor: '#CCC5C5',
+    borderRadius: 12,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    flex: 1,
+    // paddingHorizontal: 10,
+    // paddingVertical: 5,
+    minHeight: 50,
+  },
+  task: {
+    flex: 1,
+    // color: '#fff',
+    width: '100%',
+    fontSize: 18,
+  },
+});

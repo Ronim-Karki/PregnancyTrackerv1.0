@@ -13,6 +13,7 @@ const Weight = () => {
   const [textvalue, settextValue] = useState('');
   const onSaveValue = () => {
     setToDo(textvalue);
+    settextValue('');
   };
   //   const onChange = (e) => {
   //     settextValue(e.target.value);
@@ -35,9 +36,10 @@ const Weight = () => {
               flex: 1,
               padding: -10,
             }}
+            keyboardType="numeric"
             value={textvalue}
             placeholder="Enter your weight in KG"
-            onChange={(text) => settextValue(text)}
+            onChangeText={(text) => settextValue(text)}
           />
         </View>
         <View

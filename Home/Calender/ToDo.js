@@ -7,12 +7,21 @@ import {
   Pressable,
 } from 'react-native';
 import React, { useState } from 'react';
-
+import TaskItem from './TaskItem';
 const ToDo = () => {
-  const [todo, setToDo] = useState(null);
+  const [todo, setToDo] = useState([]);
   const [textvalue, settextValue] = useState('');
   const onSave = () => {
-    setToDo(textvalue);
+    if (todo === null) {
+      setToDo([textvalue]);
+      settextValue('');
+    } else if (todo !== null) {
+      setToDo([...todo, textvalue]);
+      settextValue('');
+    }
+  };
+  const deleteTask = (deleteIndex) => {
+    setToDo(todo.filter((value, index) => index != deleteIndex));
   };
   return (
     <ScrollView>
@@ -32,8 +41,8 @@ const ToDo = () => {
             }}
             value={textvalue}
             placeholder="Enter your list"
-            onChange={(textvalue) => {
-              settextValue(textvalue);
+            onChangeText={(value) => {
+              settextValue(value);
             }}
           />
         </View>
@@ -52,7 +61,7 @@ const ToDo = () => {
               textAlign: 'center',
               alignItems: 'center',
             }}
-            onPress={() => onSave()}
+            onPress={() => (textvalue != '' ? onSave() : null)}
           >
             <Text
               style={{
@@ -69,7 +78,21 @@ const ToDo = () => {
           </Pressable>
         </View>
         <View style={{ backgroundColor: 'white', marginTop: 15, height: 500 }}>
-          <Text>{textvalue}</Text>
+          {todo !== [null] ? (
+            todo.map((item, index) => {
+              return (
+                <View key={index} style={{ marginBottom: 15, marginTop: 15 }}>
+                  <TaskItem
+                    index={index + 1}
+                    task={item}
+                    deleteTask={() => deleteTask(index)}
+                  />
+                </View>
+              );
+            })
+          ) : (
+            <Text>Please Write Something</Text>
+          )}
         </View>
       </View>
     </ScrollView>

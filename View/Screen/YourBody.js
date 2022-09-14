@@ -41,7 +41,7 @@ const YourBody = () => {
   //     dataFetch();
   //   }, [week]);
   return (
-    <View style={{ paddingTop: 25, backgroundColor: 'white', flex: 1 }}>
+    <View style={{ backgroundColor: 'white', flex: 1 }}>
       <View style={{ margin: 15 }}>
         <Text style={{ fontSize: 25, fontWeight: 'bold' }}>YourBody</Text>
       </View>

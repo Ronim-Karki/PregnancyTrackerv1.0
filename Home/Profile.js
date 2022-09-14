@@ -181,7 +181,7 @@ const Profile = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     margin: 0,
-    paddingTop: 25,
+    // paddingTop: 25,
   },
   box: {
     flexDirection: 'row',

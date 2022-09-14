@@ -149,9 +149,10 @@ const styles = StyleSheet.create({
     color: 'black',
     // backgroundColor:'blue',
     margin: 10,
+    // marginTop: 25,
     maxWidth: '100%',
 
-    paddingTop: 15,
+    // paddingTop: 15,
     fontWeight: 'bold',
   },
   textMain: {
